@@ -1,0 +1,27 @@
+*{
+    box-sizing: border-box;
+}
+
+header{
+    width: 100%;
+    height: 150px;
+    border: 2px black solid;
+    margin-bottom: 10px;
+}
+
+header h1{
+    text-align: center;
+    font-size: 50px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 15% 42% 41.5%;
+    grid-gap:10px;
+}
+
+section{
+    border: 2px solid black;
+    height: 500px;
+    padding: 10px;
+}
