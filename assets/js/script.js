@@ -1,11 +1,11 @@
 searchForm = document.querySelector('#search-form');
 cityInput = document.querySelector('#city-input');
 
-//searchForm.addEventListner('click', function(e){
-   // e.preventDefault();
-    //const cityName = cityInput.value.trim();
+searchForm.addEventListner('click', function(e){
+    e.preventDefault();
+    const cityName = cityInput.value.trim();
 
-//})
+})
 
 const genreBtn = document.getElementById("genreBtn");
 const genreList = document.getElementById("genreList");
