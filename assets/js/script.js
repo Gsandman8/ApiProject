@@ -1,10 +1,27 @@
 searchForm = document.querySelector('#search-form');
 cityInput = document.querySelector('#city-input');
 
-searchForm.addEventListner('click', function(e){
+searchForm.addEventListener('submit', function(e){
     e.preventDefault();
     const cityName = cityInput.value.trim();
+    const options = {
+        method: 'GET',
+        headers: {
+            "x-requested-with": "xmlhttprequest",
+            "Access-Control-Allow-Origin": "*",
+            accept: 'application/json',
+            Authorization: 'Bearer TjYoyO8dDXoA2iXALansAO60ZGlYp__d4C4hUhp39jcKd2DxDC7YDe0O26-GicSpcmHboiNMTx__bOFkhi-Syvg0Ro3Dx_vs8_i_mnCzo1gnRk5b5OR1-qT1CLkDZXYx'
+        }
+    };
 
+    const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${cityName}&sort_by=best_match&limit=20`;
+
+    fetch(apiUrl, options)
+        .then(response => response.json())
+        .then(function(data){
+        console.log(data)
+        })
+        .catch(err => console.error(err));
 })
 
 const genreBtn = document.getElementById("genreBtn");
