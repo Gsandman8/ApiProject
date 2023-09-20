@@ -32,6 +32,11 @@ section{
     margin-top: 10px;
 }
 
+#movieList {
+    min-height: 500px;
+    block-size: fit-content;
+}
+
 button:hover {
     background-color: #c3c3c3;
     cursor: pointer;
