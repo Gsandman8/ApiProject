@@ -1,5 +1,6 @@
-searchForm = document.querySelector('#search-form');
-cityInput = document.querySelector('#city-input');
+const searchForm = document.querySelector('#search-form');
+const cityInput = document.querySelector('#city-input');
+const yelp = document.querySelector('.restaurants'); 
 
 searchForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -15,11 +16,28 @@ searchForm.addEventListener('submit', function(e){
     };
 
     const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${cityName}&sort_by=best_match&limit=20`;
+    yelp.innerHTML = '';
 
     fetch(apiUrl, options)
         .then(response => response.json())
         .then(function(data){
-        console.log(data)
+        console.log(data);
+        yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
+        
+        for (let i = 0; i < data.businesses.length; i++) {
+            const item = data.businesses[i];
+            const name = item.name;
+            const rating = item.rating;
+            const url = item.url;
+            const reviewCount = item.review_count;
+
+            yelp.innerHTML += `
+                <h3>${name}</h3> 
+                <p>Rating: ${rating}</p>
+                <a href="${url}" target="_blank">${url}</a>
+                <p>Based on ${reviewCount} Reviews</p>
+            `;
+            }
         })
         .catch(err => console.error(err));
 })
