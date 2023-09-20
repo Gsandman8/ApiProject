@@ -20,6 +20,36 @@
             </form>
             <div class="movie">
                 <h2>movie</h2>
+                <card class="card"> 
+                    <form>
+                    <label for="genreList">
+                        Choose a genre:
+                    </label>
+        
+                    <select name="genres" id="genreList">
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="animation">Animation</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="crime">Crime</option>
+                        <option value="documentary">Documentary</option>
+                        <option value="drama">Drama</option>
+                        <option value="family">Family</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="history">History</option>
+                        <option value="horror">Horror</option>
+                        <option value="music">Music</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="scienceFiction">Science Fiction</option>
+                        <option value="tVMovie">TV Movie</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="war">War</option>
+                        <option value="western">Western</option>
+                    </select>
+                    <button for="genreList" id="genreBtn" value="OK"></button>
+                </form>
+                </card>
             </div>
         </section>
 
@@ -28,7 +58,9 @@
         </section>
 
         <section class="movie-list">
+            <div id="movieList">
 
+            </div>
         </section>
         <script src="./assets/js/script.js"></script>
     </main>
