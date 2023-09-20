@@ -1,6 +1,7 @@
 const searchForm = document.querySelector('#search-form');
 const cityInput = document.querySelector('#city-input');
 const yelp = document.querySelector('.restaurants'); 
+const yelpLogo = document.createElement("img");
 
 searchForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -31,10 +32,12 @@ searchForm.addEventListener('submit', function(e){
             const url = item.url;
             const reviewCount = item.review_count;
 
+            yelpLogo.src = "assets/images/yelpIcon.png";
+            yelpLogo.alt = "Yelp Logo";
+            
             yelp.innerHTML += `
                 <h3>${name}</h3> 
-                <p>Rating: ${rating}</p>
-                <a href="${url}" target="_blank">${url}</a>
+                <p>Rating: ${rating}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
                 <p>Based on ${reviewCount} Reviews</p>
             `;
             }
