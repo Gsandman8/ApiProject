@@ -20,10 +20,10 @@ searchForm.addEventListener('submit', function(e){
     yelp.innerHTML = '';
 
     fetch(apiUrl, options)
-        .then(response => response.json())
-        .then(function(data){
-        console.log(data);
-        yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
+    .then(response => response.json())
+    .then(function(data){
+    console.log(data);
+    yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
         
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
@@ -32,17 +32,27 @@ searchForm.addEventListener('submit', function(e){
             const url = item.url;
             const reviewCount = item.review_count;
 
+            let yelpStar = '';
+            if(rating === 5){
+                yelpStar = `<img src="assets/images/web_and_ios/small/small_5.png" alt="5 Stars">`;
+            } else if (rating === 4.5){
+                yelpStar = `<img src="assets/images/web_and_ios/small/small_4_half.png" alt="4.5 Stars">`;
+            } else if (rating === 4){
+                yelpStar = `<img src="assets/images/web_and_ios/small/small_4.png" alt="4 Stars">`;
+            }
+
             yelpLogo.src = "assets/images/yelpIcon.png";
             yelpLogo.alt = "Yelp Logo";
             
             yelp.innerHTML += `
                 <h3>${name}</h3> 
-                <p>Rating: ${rating}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
+                <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
                 <p>Based on ${reviewCount} Reviews</p>
             `;
-            }
-        })
-        .catch(err => console.error(err));
+        }
+        cityInput.value = '';
+    })
+    .catch(err => console.error(err));
 })
 
 const genreBtn = document.getElementById("genreBtn");
