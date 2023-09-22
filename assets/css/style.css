@@ -24,7 +24,7 @@
 
 section{
     border: 2px solid black;
-    height: 500px;
+    height: 600px;
     padding: 10px;
     overflow-y: auto;
 }
@@ -35,10 +35,6 @@ section{
     margin-top: 10px;
 }
 
-#movieList {
-    min-height: 500px;
-    block-size: fit-content;
-}
 
 .poster{
     height: 90px;
