@@ -23,8 +23,8 @@ searchForm.addEventListener('submit', function(e){
     .then(response => response.json())
     .then(function(data){
     console.log(data);
-    yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
-        
+    yelp.innerHTML += '<h2 style="font-size: 26px;">Top Rated Restaurants:</h2>';
+      
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
             const name = item.name;
@@ -46,11 +46,13 @@ searchForm.addEventListener('submit', function(e){
                 yelpLogo.alt = "Yelp Logo";
             
                 yelp.innerHTML += `
-                    <h3>${name}</h3> 
-                    <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
-                    <p>Based on ${reviewCount} Reviews</p>
-                    <hr>
+                    <div class="restaurant-box">
+                        <h3 style="font-size: 20px;">${name}</h3> 
+                        <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
+                        <p style="font-size: 17px;">Based on ${reviewCount} Reviews</p>
+                    </div>
                 `;
+
             }
         }
         cityInput.value = '';
