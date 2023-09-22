@@ -23,8 +23,8 @@ searchForm.addEventListener('submit', function(e){
     .then(response => response.json())
     .then(function(data){
     console.log(data);
-    yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
-        
+    yelp.innerHTML += '<h2 style="font-size: 26px; margin-bottom:15px;">Top Rated Restaurants:</h2>';
+      
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
             const name = item.name;
@@ -35,22 +35,24 @@ searchForm.addEventListener('submit', function(e){
             if (rating >= 4) {
                 let yelpStar = '';
                 if(rating === 5){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_5.png" alt="5 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_5.png" alt="5 Stars">`;
                 } else if (rating === 4.5){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_4_half.png" alt="4.5 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_4_half.png" alt="4.5 Stars">`;
                 } else if (rating === 4){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_4.png" alt="4 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_4.png" alt="4 Stars">`;
                 }
 
                 yelpLogo.src = "assets/images/yelpIcon.png";
                 yelpLogo.alt = "Yelp Logo";
             
                 yelp.innerHTML += `
-                    <h3>${name}</h3> 
-                    <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
-                    <p>Based on ${reviewCount} Reviews</p>
-                    <hr>
+                    <div class="restaurant-box">
+                        <h3 style="font-size: 20px;">${name}</h3> 
+                        <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
+                        <p style="font-size: 17px;">Based on ${reviewCount} Reviews</p>
+                    </div>
                 `;
+
             }
         }
         cityInput.value = '';
