@@ -107,15 +107,17 @@ function getMovieApi(genreId){
         let title = document.createElement("h1");
         let movie = document.createElement("p");
         let poster = document.createElement("img");
-        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].poster_path;
+        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
        
-        title.textContent = data.results[i].original_title
-        movie.textContent = data.results[i].overview
-        poster.setAttribute("src", poster_path)
-        poster.setAttribute("class", "poster");
-        movieBox.setAttribute("class", "box")
-        movieBox.appendChild(title);
+        title.textContent = data.results[i].original_title;
+        movie.textContent = data.results[i].overview;
+        poster.setAttribute("src", poster_path);
+        poster.setAttribute("class", "/poster media-left");
+        title.setAttribute("class", "media-content");
+        movie.setAttribute("class", "media-content");
+        movieBox.setAttribute("class", "box content");
         movieBox.appendChild(poster);
+        movieBox.appendChild(title);
         movieBox.appendChild(movie);
         movieList.appendChild(movieBox);
 
