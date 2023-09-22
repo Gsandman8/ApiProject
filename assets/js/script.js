@@ -49,6 +49,7 @@ searchForm.addEventListener('submit', function(e){
                     <h3>${name}</h3> 
                     <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
                     <p>Based on ${reviewCount} Reviews</p>
+                    <hr>
                 `;
             }
         }
