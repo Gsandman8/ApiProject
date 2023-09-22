@@ -136,7 +136,7 @@ function getMovieApi(genreId, page){
         movieList.appendChild(pagination);
         next.addEventListener("click", function(event){
             page++;
-            event.preventDefault
+            event.preventDefault();
             getMovieApi(genreId, page);
 
         })
@@ -154,12 +154,12 @@ function getMovieApi(genreId, page){
         movieList.appendChild(pagination);
         next.addEventListener("click", function(event){
             page++;
-            event.preventDefault
+            event.preventDefault();
             getMovieApi(genreId, page);
         })
         previous.addEventListener("click", function(event){
             page--;
-            event.preventDefault
+            event.preventDefault();
             getMovieApi(genreId, page);
         })
     }
