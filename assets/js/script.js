@@ -57,9 +57,9 @@ searchForm.addEventListener('submit', function(e){
     .catch(err => console.error(err));
 })
 
-const genreBtn = document.getElementById("genreBtn");
-const genreList = document.getElementById("genreList");
-const div = document.getElementById("movieList");
+const genreBtn = document.querySelector("#genreBtn");
+const genreList = document.querySelector("#genreList");
+const movieList = document.querySelector("#movieList");
 const genreIdList = {
     action: 28,
     adventure: 12,
@@ -89,7 +89,7 @@ genreBtn.addEventListener("click", function(event){
     genre = genreList.value;
     genreId = genreIdList[genre];
     console.log(genreId);
-    div.textContent="";
+    movieList.textContent="";
     getMovieApi(genreId);
 })
 
@@ -102,12 +102,21 @@ function getMovieApi(genreId){
     .then(function (data) {
     console.log(data);
     for(let i=0; i<data.results.length; i++){
-        let header = document.createElement("h1");
-        let p = document.createElement("p");
-        header.textContent = data.results[i].original_title
-        p.textContent = data.results[i].overview
-        div.appendChild(header);
-        div.appendChild(p);
+        let movieBox = document.createElement("div");
+        let title = document.createElement("h1");
+        let movie = document.createElement("p");
+        let poster = document.createElement("img");
+        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].poster_path;
+       
+        title.textContent = data.results[i].original_title
+        movie.textContent = data.results[i].overview
+        poster.setAttribute("src", poster_path)
+        poster.setAttribute("class", "poster");
+        movieBox.setAttribute("class", "box")
+        movieBox.appendChild(title);
+        movieBox.appendChild(poster);
+        movieBox.appendChild(movie);
+        movieList.appendChild(movieBox);
 
         
     }
