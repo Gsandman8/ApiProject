@@ -125,9 +125,10 @@ function getMovieApi(genreId, page){
         movieBox.appendChild(movie);
         movieList.appendChild(movieBox);
 
-        
+         
     }
-    if(page===1){
+    page = data.page
+    if(data.page===1){
         let pagination = document.createElement("nav");
         let next = document.createElement("a");
         pagination.setAttribute("class", "pagination is-rounded");
