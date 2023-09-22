@@ -49,6 +49,7 @@ searchForm.addEventListener('submit', function(e){
                     <h3>${name}</h3> 
                     <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
                     <p>Based on ${reviewCount} Reviews</p>
+                    <hr>
                 `;
             }
         }
@@ -83,6 +84,7 @@ const genreIdList = {
 };
 let genre = ""
 let genreId = "";
+let page= 1;
 
 genreBtn.addEventListener("click", function(event){
     event.preventDefault();
@@ -90,12 +92,14 @@ genreBtn.addEventListener("click", function(event){
     genreId = genreIdList[genre];
     console.log(genreId);
     movieList.textContent="";
-    getMovieApi(genreId);
+    getMovieApi(genreId, page);
+    
 })
 
-function getMovieApi(genreId){
-    var requestUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=';
-    fetch(requestUrl+genreId)
+function getMovieApi(genreId, page){
+    movieList.textContent = "";
+    var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}`;
+    fetch(requestUrl)
     .then(function (response) {
         return response.json();
         })
@@ -122,5 +126,44 @@ function getMovieApi(genreId){
 
         
     }
+    if(page===1){
+        let pagination = document.createElement("nav");
+        let next = document.createElement("a");
+        pagination.setAttribute("class", "pagination is-rounded");
+        next.setAttribute("class", "pagination-next");
+        next.textContent = "Next";
+        pagination.appendChild(next);
+        movieList.appendChild(pagination);
+        next.addEventListener("click", function(event){
+            page++;
+            event.preventDefault
+            getMovieApi(genreId, page);
+
+        })
+    } else{
+        let pagination = document.createElement("nav");
+        let previous = document.createElement("a");
+        let next = document.createElement("a");
+        pagination.setAttribute("class", "pagination is-rounded");
+        previous.setAttribute("class", "pagination-previous");
+        next.setAttribute("class", "pagination-next");
+        previous.textContent = "Previous";
+        next.textContent = "Next";
+        pagination.appendChild(previous);
+        pagination.appendChild(next);
+        movieList.appendChild(pagination);
+        next.addEventListener("click", function(event){
+            page++;
+            event.preventDefault
+            getMovieApi(genreId, page);
+        })
+        previous.addEventListener("click", function(event){
+            page--;
+            event.preventDefault
+            getMovieApi(genreId, page);
+        })
+    }
+    
+
 })
 }
