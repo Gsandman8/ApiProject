@@ -2,6 +2,40 @@ const searchForm = document.querySelector('#search-form');
 const cityInput = document.querySelector('#city-input');
 const yelp = document.querySelector('.restaurants'); 
 const yelpLogo = document.createElement("img");
+const searchHistory = document.querySelector('#search-history');
+
+function addToSearchHistory(cityName) {
+    let searchHistoryArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+    const index = searchHistoryArray.indexOf(cityName);
+    if (index !== -1) {
+        searchHistoryArray.splice(index, 1);
+    }
+    searchHistoryArray.unshift(cityName);
+
+    if (searchHistoryArray.length > 3) {
+        searchHistoryArray.pop();
+    }
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+    displaySearchHistory(searchHistoryArray);
+}
+
+function displaySearchHistory(searchHistoryArray) {
+    searchHistory.innerHTML = "";
+
+    for (const city of searchHistoryArray) {
+        const listItem = document.createElement("li");
+        listItem.textContent = city;
+        searchHistory.appendChild(listItem);
+    }
+}
+
+window.onload = function () {
+    const searchHistoryArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    displaySearchHistory(searchHistoryArray);
+};
 
 searchForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -24,7 +58,7 @@ searchForm.addEventListener('submit', function(e){
     .then(function(data){
     console.log(data);
     yelp.innerHTML += '<h2 style="font-size: 26px; margin-bottom:15px;">Top Rated Restaurants:</h2>';
-      
+    addToSearchHistory(cityName);
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
             const name = item.name;
