@@ -79,3 +79,10 @@ a {
 li{
     list-style: none;
 }
+
+.text-center{
+    display:block;
+    margin:auto;
+    text-align: center;
+    font-size: 50px;
+}
