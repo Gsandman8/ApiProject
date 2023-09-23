@@ -149,6 +149,17 @@ function addTitle(genre){
     movieList.appendChild(headerContainer);
     setMovieStorage(page,genreId,genre);
 }
+function getWatchProviders(id){
+    var requestUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=d731edca152ef707766b1bf7bf0763e9&with_region=US`;
+    fetch(requestUrl)
+    .then(function (response) {
+        return response.json();
+        })
+    .then(function (data) {
+    console.log(data);
+    addTitle(genre);
+    })
+}
 function getMovieApi(genreId, page){
     movieList.textContent = "";
     var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc&vote_count.gte=200`;
@@ -162,6 +173,7 @@ function getMovieApi(genreId, page){
 
 
     for(let i=0; i<data.results.length; i++){
+        
         let movieBox = document.createElement("div");
         let title = document.createElement("h1");
         let movie = document.createElement("p");
@@ -179,6 +191,7 @@ function getMovieApi(genreId, page){
         movieBox.appendChild(title);
         movieBox.appendChild(movie);
         movieList.appendChild(movieBox);
+        getWatchProviders(data.results[i].id);
 
          
     }
