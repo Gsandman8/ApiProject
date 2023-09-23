@@ -151,7 +151,7 @@ function addTitle(genre){
 }
 function getMovieApi(genreId, page){
     movieList.textContent = "";
-    var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}`;
+    var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc&vote_count.gte=200`;
     fetch(requestUrl)
     .then(function (response) {
         return response.json();
