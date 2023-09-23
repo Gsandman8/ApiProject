@@ -126,11 +126,29 @@ genreBtn.addEventListener("click", function(event){
     event.preventDefault();
     genre = genreList.value;
     genreId = genreIdList[genre];
+    genre = genreList.options[genreList.selectedIndex].textContent;
     console.log(genreId);
     movieList.textContent="";
-    getMovieApi(genreId);
+    getMovieApi(genreId,page);
 })
 
+function setMovieStorage(page,genreId,genre){
+    const movieInfo = [];
+    movieInfo[0] = page;
+    movieInfo[1] = genreId;
+    movieInfo[2] = genre;
+    localStorage.setItem("movieInfo", JSON.stringify(movieInfo));
+}
+function addTitle(genre){
+    const header = document.createElement("h1");
+    const headerContainer = document.createElement("div");
+    genre = genre.toUpperCase();
+    header.textContent = genre;
+    headerContainer.setAttribute("class", "text-center");
+    headerContainer.appendChild(header);
+    movieList.appendChild(headerContainer);
+    setMovieStorage(page,genreId,genre);
+}
 function getMovieApi(genreId, page){
     movieList.textContent = "";
     var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}`;
@@ -140,6 +158,9 @@ function getMovieApi(genreId, page){
         })
     .then(function (data) {
     console.log(data);
+    addTitle(genre);
+
+
     for(let i=0; i<data.results.length; i++){
         let movieBox = document.createElement("div");
         let title = document.createElement("h1");
@@ -150,7 +171,7 @@ function getMovieApi(genreId, page){
         title.textContent = data.results[i].original_title;
         movie.textContent = data.results[i].overview;
         poster.setAttribute("src", poster_path);
-        poster.setAttribute("class", "/poster media-left");
+        poster.setAttribute("class", "media-left");
         title.setAttribute("class", "media-content");
         movie.setAttribute("class", "media-content");
         movieBox.setAttribute("class", "box content");
@@ -174,6 +195,7 @@ function getMovieApi(genreId, page){
             page++;
             event.preventDefault();
             getMovieApi(genreId, page);
+            setMovieStorage(page,genreId,genre);
 
         })
     } else{
@@ -192,14 +214,24 @@ function getMovieApi(genreId, page){
             page++;
             event.preventDefault();
             getMovieApi(genreId, page);
+            setMovieStorage(page,genreId,genre);
         })
         previous.addEventListener("click", function(event){
             page--;
             event.preventDefault();
             getMovieApi(genreId, page);
+            setMovieStorage(page,genreId,genre);
         })
     }
     
 
 })
+}
+window.onload = function () {
+    movieList.textContent = "";
+    const movieInfo = JSON.parse(localStorage.getItem("movieInfo")) || [];
+    getMovieApi(movieInfo[1],movieInfo[0]);
+    addTitle(movieInfo[2]);
+    
+
 }
