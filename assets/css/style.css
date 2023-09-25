@@ -81,15 +81,23 @@ li{
 }
 
 .text-center{
-    display:inline-block;
-    margin:auto;
-    text-align: center !important;
+    margin: auto;
+    text-align: center;
     font-size: 50px;
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.font-monaco{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.font-monaco-small{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.15rem;
+}
 .reel{
     font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: bold;
+    font-size: 60px;
 }
 
 .meal{

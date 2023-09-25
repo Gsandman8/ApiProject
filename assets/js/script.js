@@ -177,14 +177,20 @@ function getMovieApi(genreId, page){
         let title = document.createElement("h1");
         let movie = document.createElement("p");
         let poster = document.createElement("img");
-        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
+        let poster_path = "";
+        if(data.results[i].backdrop_path===null){
+            poster_path = "assets/images/movie.png";
+        }
+        else{
+            poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
+        }
        
         title.textContent = data.results[i].original_title;
         movie.textContent = data.results[i].overview;
         poster.setAttribute("src", poster_path);
         poster.setAttribute("class", "media-left");
-        title.setAttribute("class", "media-content");
-        movie.setAttribute("class", "media-content");
+        title.setAttribute("class", "media-content font-monaco");
+        movie.setAttribute("class", "media-content font-monaco-small");
         movieBox.setAttribute("class", "box content");
         movieBox.appendChild(poster);
         movieBox.appendChild(title);
