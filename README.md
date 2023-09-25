@@ -26,6 +26,8 @@ APIs:
 
 ![gsandman8 github io_ReelAndMeal_](https://github.com/Gsandman8/ReelAndMeal/assets/140360580/fac424a0-cad8-4699-8fda-89d553ac6313)
 
+## Credits
+Raymond Bautista, https://github.com/Raymond2811
 
 ## Links
 Github Repo:
