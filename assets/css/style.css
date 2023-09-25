@@ -12,9 +12,10 @@
 body {
     height: 100vh;
     background-color: hs1 (48, 100%, 96%);
-    background-image: url("../images/cropped-medium.jpg");
-    background-position: center;
-    background-size: fit;
+    background-image: url("../images/cropped-medium7.jpg");
+    /* background-position: center; */  
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .header{
