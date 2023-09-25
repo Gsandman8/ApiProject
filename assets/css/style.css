@@ -96,3 +96,13 @@ button:hover {
 label {
     color: rgb(159, 109, 252);
 }
+
+.text-center{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.handwriting{
+    font-family: "Lucida Handwriting";
+}
