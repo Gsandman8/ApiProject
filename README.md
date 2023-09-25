@@ -24,7 +24,8 @@ APIs:
 
 ## Screenshots
 
-![_C__Users_gagee_Bootcamp_Project1_index html](https://github.com/Gsandman8/ReelAndMeal/assets/140360580/c903901f-5668-4b34-9026-445756dce4a5)
+![gsandman8 github io_ReelAndMeal_](https://github.com/Gsandman8/ReelAndMeal/assets/140360580/fac424a0-cad8-4699-8fda-89d553ac6313)
+
 
 ## Links
 Github Repo:
