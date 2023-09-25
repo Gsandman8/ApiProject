@@ -1,13 +1,25 @@
+:root{
+    --custard: #2C2C54;
+    --peach: #474787;
+    --pastel-orange: #AAABB8;
+
+}
 *{
     box-sizing: border-box;
+}
+
+body{
+    background-color: var(--peach);
 }
 
 .header{
     width: 100%;
     height: 150px;
-    border: 2px black solid;
     margin-bottom: 10px;
     display: flex;
+}
+.hero{
+    background-color: var(--custard);
 }
 
 h2 {
@@ -69,7 +81,11 @@ h3 {
 }
 
 .restaurants {
-    background-color: #f8f8f8;
+    background-color: var(--pastel-orange);
+}
+
+#movieList{
+    background-color: var(--pastel-orange);
 }
 
 a {
@@ -122,4 +138,8 @@ li{
 .justify{
     justify-content: space-around;
     align-items: center;
+}
+
+.pastel-orange{
+    background-color: var(--pastel-orange);
 }

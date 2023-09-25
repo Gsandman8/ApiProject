@@ -57,7 +57,9 @@ searchForm.addEventListener('submit', function(e){
     .then(response => response.json())
     .then(function(data){
     console.log(data);
-    yelp.innerHTML += '<h2 style="font-size: 26px; margin-bottom:15px;">Top Rated Restaurants:</h2>';
+    yelp.innerHTML += `<div class="box">
+                            <h2 style="font-size: 26px; margin-bottom:15px; text-align:center;">Top Rated Restaurants:</h2>
+                        </div>`;
     addToSearchHistory(cityName);
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
@@ -97,7 +99,6 @@ searchForm.addEventListener('submit', function(e){
 const genreBtn = document.querySelector("#genreBtn");
 const genreList = document.querySelector("#genreList");
 const movieList = document.querySelector("#movieList");
-const movieInfo = [];
 const genreIdList = {
     action: 28,
     adventure: 12,
@@ -119,7 +120,7 @@ const genreIdList = {
     war: 10752,
     western: 37
 };
-let genre = ""
+let genre="";
 let genreId = "";
 let page = "";
 
@@ -130,24 +131,24 @@ genreBtn.addEventListener("click", function(event){
     genre = genreList.options[genreList.selectedIndex].textContent;
     console.log(genreId);
     movieList.textContent="";
-    getMovieApi(genreId,page);
+    getMovieApi(genreId,page,genre);
 })
 
-function setMovieStorage(page,genreId,genre){
+function setMovieStorage(page,genreId,title){
+    let movieInfo = [];
     movieInfo[0] = page;
     movieInfo[1] = genreId;
-    movieInfo[2] = genre;
+    movieInfo[2] = title;
     localStorage.setItem("movieInfo", JSON.stringify(movieInfo));
 }
-function addTitle(genre){
+function addTitle(title){
     const header = document.createElement("h1");
     const headerContainer = document.createElement("div");
-    genre = genre.toUpperCase();
-    header.textContent = genre;
-    headerContainer.setAttribute("class", "text-center");
+    title = title.toUpperCase();
+    header.textContent = title;
+    headerContainer.setAttribute("class", "box text-center");
     headerContainer.appendChild(header);
     movieList.appendChild(headerContainer);
-    setMovieStorage(page,genreId,genre);
 }
 function getWatchProviders(id){
     var requestUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=d731edca152ef707766b1bf7bf0763e9&with_region=US`;
@@ -160,7 +161,7 @@ function getWatchProviders(id){
     })
     .catch(err => console.error(err));
 }
-function getMovieApi(genreId, page){
+function getMovieApi(genreId, page, genre){
     movieList.textContent = "";
     var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc&vote_count.gte=200`;
     fetch(requestUrl)
@@ -173,7 +174,6 @@ function getMovieApi(genreId, page){
 
 
     for(let i=0; i<data.results.length; i++){
-        
         let movieBox = document.createElement("div");
         let title = document.createElement("h1");
         let movie = document.createElement("p");
@@ -202,6 +202,7 @@ function getMovieApi(genreId, page){
          
     }
     page = data.page
+    setMovieStorage(page, genreId, genre);
     if(data.page===1){
         let pagination = document.createElement("nav");
         let next = document.createElement("a");
@@ -247,11 +248,11 @@ function getMovieApi(genreId, page){
 
 })
 }
-window.onload = function () {
+window.addEventListener("load", function () {
     movieList.textContent = "";
-    const movieInfo = JSON.parse(localStorage.getItem("movieInfo"));
-    getMovieApi(movieInfo[1],movieInfo[0]);
+    let movieInfo = JSON.parse(localStorage.getItem("movieInfo"));
     addTitle(movieInfo[2]);
+    getMovieApi(movieInfo[1],movieInfo[0], movieInfo[2]);
     
 
-}
+})
