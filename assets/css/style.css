@@ -28,7 +28,7 @@ h2 {
 
 section{
     border: 2px solid black;
-    height: 600px;
+    height: 700px;
     padding: 10px;
     overflow-y: auto;
 }
