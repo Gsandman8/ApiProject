@@ -81,8 +81,37 @@ li{
 }
 
 .text-center{
-    display:block;
+    display:inline-block;
     margin:auto;
-    text-align: center;
+    text-align: center !important;
     font-size: 50px;
+}
+
+.reel{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+}
+
+.meal{
+    font-family:'Lucida Handwriting', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.rotate-right{
+    transform: rotate(10deg);
+}
+
+.rotate-left{
+    transform: rotate(-10deg);
+}
+
+.header-image{
+    height:100px;
+    width: 125px;
+    margin: 0 50px;
+    
+}
+
+.justify{
+    justify-content: space-around;
+    align-items: center;
 }

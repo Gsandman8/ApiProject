@@ -97,6 +97,7 @@ searchForm.addEventListener('submit', function(e){
 const genreBtn = document.querySelector("#genreBtn");
 const genreList = document.querySelector("#genreList");
 const movieList = document.querySelector("#movieList");
+const movieInfo = [];
 const genreIdList = {
     action: 28,
     adventure: 12,
@@ -120,7 +121,7 @@ const genreIdList = {
 };
 let genre = ""
 let genreId = "";
-let page= 1;
+let page = "";
 
 genreBtn.addEventListener("click", function(event){
     event.preventDefault();
@@ -133,7 +134,6 @@ genreBtn.addEventListener("click", function(event){
 })
 
 function setMovieStorage(page,genreId,genre){
-    const movieInfo = [];
     movieInfo[0] = page;
     movieInfo[1] = genreId;
     movieInfo[2] = genre;
@@ -157,7 +157,6 @@ function getWatchProviders(id){
         })
     .then(function (data) {
     console.log(data);
-    addTitle(genre);
     })
 }
 function getMovieApi(genreId, page){
@@ -242,7 +241,7 @@ function getMovieApi(genreId, page){
 }
 window.onload = function () {
     movieList.textContent = "";
-    const movieInfo = JSON.parse(localStorage.getItem("movieInfo")) || [];
+    const movieInfo = JSON.parse(localStorage.getItem("movieInfo"));
     getMovieApi(movieInfo[1],movieInfo[0]);
     addTitle(movieInfo[2]);
     
