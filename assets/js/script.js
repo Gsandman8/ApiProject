@@ -57,7 +57,9 @@ searchForm.addEventListener('submit', function(e){
     .then(response => response.json())
     .then(function(data){
     console.log(data);
-    yelp.innerHTML += '<h2 style="font-size: 26px; margin-bottom:15px;">Top Rated Restaurants:</h2>';
+    yelp.innerHTML += `<div class="box">
+                            <h2 style="font-size: 26px; margin-bottom:15px; text-align:center;">Top Rated Restaurants:</h2>
+                        </div>`;
     addToSearchHistory(cityName);
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
@@ -118,9 +120,9 @@ const genreIdList = {
     war: 10752,
     western: 37
 };
-let genre = ""
+let genre="";
 let genreId = "";
-let page= 1;
+let page = "";
 
 genreBtn.addEventListener("click", function(event){
     event.preventDefault();
@@ -129,27 +131,37 @@ genreBtn.addEventListener("click", function(event){
     genre = genreList.options[genreList.selectedIndex].textContent;
     console.log(genreId);
     movieList.textContent="";
-    getMovieApi(genreId,page);
+    getMovieApi(genreId,page,genre);
 })
 
-function setMovieStorage(page,genreId,genre){
-    const movieInfo = [];
+function setMovieStorage(page,genreId,title){
+    let movieInfo = [];
     movieInfo[0] = page;
     movieInfo[1] = genreId;
-    movieInfo[2] = genre;
+    movieInfo[2] = title;
     localStorage.setItem("movieInfo", JSON.stringify(movieInfo));
 }
-function addTitle(genre){
+function addTitle(title){
     const header = document.createElement("h1");
     const headerContainer = document.createElement("div");
-    genre = genre.toUpperCase();
-    header.textContent = genre;
-    headerContainer.setAttribute("class", "text-center");
+    title = title.toUpperCase();
+    header.textContent = title;
+    headerContainer.setAttribute("class", "box text-center");
     headerContainer.appendChild(header);
     movieList.appendChild(headerContainer);
-    setMovieStorage(page,genreId,genre);
 }
-function getMovieApi(genreId, page){
+function getWatchProviders(id){
+    var requestUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=d731edca152ef707766b1bf7bf0763e9&with_region=US`;
+    fetch(requestUrl)
+    .then(function (response) {
+        return response.json();
+        })
+    .then(function (data) {
+    console.log(data);
+    })
+    .catch(err => console.error(err));
+}
+function getMovieApi(genreId, page, genre){
     movieList.textContent = "";
     var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc&vote_count.gte=200`;
     fetch(requestUrl)
@@ -166,23 +178,31 @@ function getMovieApi(genreId, page){
         let title = document.createElement("h1");
         let movie = document.createElement("p");
         let poster = document.createElement("img");
-        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
+        let poster_path = "";
+        if(data.results[i].backdrop_path===null){
+            poster_path = "assets/images/movie.png";
+        }
+        else{
+            poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
+        }
        
         title.textContent = data.results[i].original_title;
         movie.textContent = data.results[i].overview;
         poster.setAttribute("src", poster_path);
         poster.setAttribute("class", "media-left");
-        title.setAttribute("class", "media-content");
-        movie.setAttribute("class", "media-content");
+        title.setAttribute("class", "media-content font-monaco");
+        movie.setAttribute("class", "media-content font-monaco-small");
         movieBox.setAttribute("class", "box content");
         movieBox.appendChild(poster);
         movieBox.appendChild(title);
         movieBox.appendChild(movie);
         movieList.appendChild(movieBox);
+        getWatchProviders(data.results[i].id);
 
          
     }
     page = data.page
+    setMovieStorage(page, genreId, genre);
     if(data.page===1){
         let pagination = document.createElement("nav");
         let next = document.createElement("a");
@@ -213,25 +233,26 @@ function getMovieApi(genreId, page){
         next.addEventListener("click", function(event){
             page++;
             event.preventDefault();
-            getMovieApi(genreId, page);
+            getMovieApi(genreId, page, genre);
             setMovieStorage(page,genreId,genre);
         })
         previous.addEventListener("click", function(event){
             page--;
             event.preventDefault();
-            getMovieApi(genreId, page);
+            getMovieApi(genreId, page, genre);
             setMovieStorage(page,genreId,genre);
         })
+        .catch(err => console.error(err));
     }
     
 
 })
 }
-window.onload = function () {
+window.addEventListener("load", function () {
     movieList.textContent = "";
-    const movieInfo = JSON.parse(localStorage.getItem("movieInfo")) || [];
-    getMovieApi(movieInfo[1],movieInfo[0]);
+    let movieInfo = JSON.parse(localStorage.getItem("movieInfo"));
     addTitle(movieInfo[2]);
+    getMovieApi(movieInfo[1],movieInfo[0], movieInfo[2]);
     
 
-}
+})

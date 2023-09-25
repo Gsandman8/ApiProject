@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
-<body class="has-background-link">
-    <header class="hero is-info header"> 
-        <h1>Reel & Meal</h1>
+<body class="">
+    <header class="hero header justify"> 
+            <h1 class="text-center">
+                <img class="header-image rotate-left" src="assets/images/Reel2.png" alt="A photo of a film reel">
+                <span class="reel">Reel</span> & <span class="meal">Meal</span>
+                <img class="header-image rotate-right" src="assets/images/Meal2.png" alt="A photo of a plate with a knife and fork on either side">
+            </h1>
     </header>
 
     <main class="container">
-        <section class="box">
+        <section class="box pastel-orange">
             <form id="search-form">
                 <h2>Search for a city:</h2>
                 <input type="text" id="city-input" placeholder="Enter a city"/>
@@ -29,8 +33,8 @@
                     <label for="genreList">
                         Choose a genre:
                     </label>
-        
-                    <select name="genres" id="genreList">
+                <div class="select is-rounded is-info">
+                    <select  name="genres" id="genreList">
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="animation">Animation</option>
@@ -51,6 +55,7 @@
                         <option value="war">War</option>
                         <option value="western">Western</option>
                     </select>
+                 </div>
                     <button for="genreList" id="genreBtn" value="OK">Search</button>
                 </form>
                 </card>

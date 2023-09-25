@@ -1,13 +1,25 @@
+:root{
+    --custard: #2C2C54;
+    --peach: #474787;
+    --pastel-orange: #AAABB8;
+
+}
 *{
     box-sizing: border-box;
+}
+
+body{
+    background-color: var(--peach);
 }
 
 .header{
     width: 100%;
     height: 150px;
-    border: 2px black solid;
     margin-bottom: 10px;
     display: flex;
+}
+.hero{
+    background-color: var(--custard);
 }
 
 h2 {
@@ -69,7 +81,11 @@ h3 {
 }
 
 .restaurants {
-    background-color: #f8f8f8;
+    background-color: var(--pastel-orange);
+}
+
+#movieList{
+    background-color: var(--pastel-orange);
 }
 
 a {
@@ -81,8 +97,57 @@ li{
 }
 
 .text-center{
-    display:block;
-    margin:auto;
+    margin: auto;
     text-align: center;
     font-size: 50px;
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.font-monaco{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.font-monaco-small{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.15rem;
+}
+.reel{
+    font-family: 'Monaco', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 60px;
+}
+
+.meal{
+    font-family:'Lucida Handwriting', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.rotate-right{
+    transform: rotate(10deg);
+}
+
+.rotate-left{
+    transform: rotate(-10deg);
+}
+
+.header-image{
+    height:100px;
+    width: 125px;
+    margin: 0 50px;
+    
+}
+
+.justify{
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pastel-orange{
+    background-color: var(--pastel-orange);
+}
+
+.pagination-next{
+    background-color: white;
+}
+
+.pagination-previous{
+    background-color: white;
 }
