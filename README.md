@@ -24,7 +24,7 @@ APIs:
 
 ## Screenshots
 
-![_C__Users_gagee_Bootcamp_Project1_index html (1)](https://github.com/Gsandman8/ReelAndMeal/assets/140360580/3981724f-829a-4030-b77f-dd0392e352b2)
+![_C__Users_gagee_Bootcamp_Project1_index html (2)](https://github.com/Gsandman8/ReelAndMeal/assets/140360580/83d831a6-461b-4dc3-832d-1b2e0daad6c5)
 
 
 ## Credits
