@@ -158,6 +158,7 @@ function getWatchProviders(id){
     .then(function (data) {
     console.log(data);
     })
+    .catch(err => console.error(err));
 }
 function getMovieApi(genreId, page){
     movieList.textContent = "";
@@ -240,6 +241,7 @@ function getMovieApi(genreId, page){
             getMovieApi(genreId, page);
             setMovieStorage(page,genreId,genre);
         })
+        .catch(err => console.error(err));
     }
     
 
