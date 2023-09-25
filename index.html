@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
-<body class="">
-    <header class="hero header justify"> 
-            <h1 class="text-center">
+<body class="peach">
+    <header class="hero custard header justify"> 
+            <h1 class="text-center light-blue">
                 <img class="header-image rotate-left" src="assets/images/Reel2.png" alt="A photo of a film reel">
                 <span class="reel">Reel</span> & <span class="meal">Meal</span>
                 <img class="header-image rotate-right" src="assets/images/Meal2.png" alt="A photo of a plate with a knife and fork on either side">
@@ -19,18 +19,18 @@
     <main class="container">
         <section class="box pastel-orange">
             <form id="search-form">
-                <h2>Search for a city:</h2>
+                <h2 class="custard-text">Search for a city:</h2>
                 <input type="text" id="city-input" placeholder="Enter a city"/>
-                <button type="submit">Search</button>
+                <button class="custard-text" type="submit">Search</button>
             </form>
 
             <div id="search-history"></div>
 
             <div class="movie">
-                <h2>Search for a movie:</h2>
+                <h2 class="custard-text">Search for a movie:</h2>
                 <card class="card"> 
                     <form>
-                    <label for="genreList">
+                    <label class="custard-text" for="genreList">
                         Choose a genre:
                     </label>
                 <div class="select is-rounded is-info">
@@ -56,17 +56,17 @@
                         <option value="western">Western</option>
                     </select>
                  </div>
-                    <button for="genreList" id="genreBtn" value="OK">Search</button>
+                    <button class="custard-text" for="genreList" id="genreBtn" value="OK">Search</button>
                 </form>
                 </card>
             </div>
         </section>
 
-        <section class="restaurants box">
+        <section class="restaurants box pastel-orange">
 
         </section>
 
-        <section class="movie-list box" id="movieList">
+        <section class="movie-list box pastel-orange" id="movieList">
             
         </section>
     </main>
