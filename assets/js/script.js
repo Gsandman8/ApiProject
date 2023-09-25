@@ -82,7 +82,7 @@ searchForm.addEventListener('submit', function(e){
                 yelpLogo.alt = "Yelp Logo";
             
                 yelp.innerHTML += `
-                    <div class="restaurant-box">
+                    <div class="restaurant-box box">
                         <h3 style="font-size: 20px;">${name}</h3> 
                         <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
                         <p style="font-size: 17px;">Based on ${reviewCount} Reviews</p>
@@ -146,7 +146,8 @@ function addTitle(title){
     const headerContainer = document.createElement("div");
     title = title.toUpperCase();
     header.textContent = title;
-    headerContainer.setAttribute("class", "box text-center");
+    header.setAttribute("class", "text-center");
+    headerContainer.setAttribute("class", "box");
     headerContainer.appendChild(header);
     movieList.appendChild(headerContainer);
 }
@@ -190,8 +191,8 @@ function getMovieApi(genreId, page, genre){
         movie.textContent = data.results[i].overview;
         poster.setAttribute("src", poster_path);
         poster.setAttribute("class", "media-left");
-        title.setAttribute("class", "media-content font-monaco");
-        movie.setAttribute("class", "media-content font-monaco-small");
+        title.setAttribute("class", "media-content");
+        movie.setAttribute("class", "media-content");
         movieBox.setAttribute("class", "box content");
         movieBox.appendChild(poster);
         movieBox.appendChild(title);
@@ -214,7 +215,7 @@ function getMovieApi(genreId, page, genre){
         next.addEventListener("click", function(event){
             page++;
             event.preventDefault();
-            getMovieApi(genreId, page);
+            getMovieApi(genreId, page, genre);
             setMovieStorage(page,genreId,genre);
 
         })
