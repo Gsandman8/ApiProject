@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real & Meal</title>
+    <title>Reel & Meal</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css"/>
 
@@ -21,21 +21,24 @@
     
     
     <main class="container">
-        <section>
+        <section class="box pastel-orange">
             <form id="search-form">
-                <h2>Search for a city:</h2>
+                <h2 class="custard-text">Search for a city:</h2>
                 <input type="text" id="city-input" placeholder="Enter a city"/>
-                <button type="submit" > Search</button>
+                <button class="custard-text" type="submit">Search</button>
             </form>
+
+            <div id="search-history"></div>
+
             <div class="movie">
-                <h2>movie</h2>
+                <h2 class="custard-text">Search for a movie:</h2>
                 <card class="card"> 
                     <form>
-                    <label for="genreList">
+                    <label class="custard-text" for="genreList">
                         Choose a genre:
                     </label>
-        
-                    <select name="genres" id="genreList">
+                <div class="select is-rounded is-info">
+                    <select  name="genres" id="genreList">
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="animation">Animation</option>
@@ -63,11 +66,11 @@
             </div>
         </section>
 
-        <section class="restaurants">
+        <section class="restaurants box pastel-orange">
 
         </section>
 
-        <section class="movie-list" id="movieList">
+        <section class="movie-list box pastel-orange" id="movieList">
             
         </section>
     </main>

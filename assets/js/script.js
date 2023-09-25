@@ -2,6 +2,40 @@ const searchForm = document.querySelector('#search-form');
 const cityInput = document.querySelector('#city-input');
 const yelp = document.querySelector('.restaurants'); 
 const yelpLogo = document.createElement("img");
+const searchHistory = document.querySelector('#search-history');
+
+function addToSearchHistory(cityName) {
+    let searchHistoryArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+    const index = searchHistoryArray.indexOf(cityName);
+    if (index !== -1) {
+        searchHistoryArray.splice(index, 1);
+    }
+    searchHistoryArray.unshift(cityName);
+
+    if (searchHistoryArray.length > 3) {
+        searchHistoryArray.pop();
+    }
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArray));
+
+    displaySearchHistory(searchHistoryArray);
+}
+
+function displaySearchHistory(searchHistoryArray) {
+    searchHistory.innerHTML = "";
+
+    for (const city of searchHistoryArray) {
+        const listItem = document.createElement("li");
+        listItem.textContent = city;
+        searchHistory.appendChild(listItem);
+    }
+}
+
+window.onload = function () {
+    const searchHistoryArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    displaySearchHistory(searchHistoryArray);
+};
 
 searchForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -23,8 +57,10 @@ searchForm.addEventListener('submit', function(e){
     .then(response => response.json())
     .then(function(data){
     console.log(data);
-    yelp.innerHTML += '<h2>Top Rated Restaurants:</h2>';
-        
+    yelp.innerHTML += `<div class="box">
+                            <h2 style="font-size: 26px; margin-bottom:15px; text-align:center;">Top Rated Restaurants:</h2>
+                        </div>`;
+    addToSearchHistory(cityName);
         for (let i = 0; i < data.businesses.length; i++) {
             const item = data.businesses[i];
             const name = item.name;
@@ -35,21 +71,24 @@ searchForm.addEventListener('submit', function(e){
             if (rating >= 4) {
                 let yelpStar = '';
                 if(rating === 5){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_5.png" alt="5 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_5.png" alt="5 Stars">`;
                 } else if (rating === 4.5){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_4_half.png" alt="4.5 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_4_half.png" alt="4.5 Stars">`;
                 } else if (rating === 4){
-                    yelpStar = `<img src="assets/images/web_and_ios/small/small_4.png" alt="4 Stars">`;
+                    yelpStar = `<img src="assets/images/web_and_ios/large/large_4.png" alt="4 Stars">`;
                 }
 
                 yelpLogo.src = "assets/images/yelpIcon.png";
                 yelpLogo.alt = "Yelp Logo";
             
                 yelp.innerHTML += `
-                    <h3>${name}</h3> 
-                    <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
-                    <p>Based on ${reviewCount} Reviews</p>
+                    <div class="restaurant-box">
+                        <h3 style="font-size: 20px;">${name}</h3> 
+                        <p>${yelpStar}<a href="${url}" target="_blank">${yelpLogo.outerHTML}</a></p>
+                        <p style="font-size: 17px;">Based on ${reviewCount} Reviews</p>
+                    </div>
                 `;
+
             }
         }
         cityInput.value = '';
@@ -81,44 +120,139 @@ const genreIdList = {
     war: 10752,
     western: 37
 };
-let genre = ""
+let genre="";
 let genreId = "";
+let page = "";
 
 genreBtn.addEventListener("click", function(event){
     event.preventDefault();
     genre = genreList.value;
     genreId = genreIdList[genre];
+    genre = genreList.options[genreList.selectedIndex].textContent;
     console.log(genreId);
     movieList.textContent="";
-    getMovieApi(genreId);
+    getMovieApi(genreId,page,genre);
 })
 
-function getMovieApi(genreId){
-    var requestUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=';
-    fetch(requestUrl+genreId)
+function setMovieStorage(page,genreId,title){
+    let movieInfo = [];
+    movieInfo[0] = page;
+    movieInfo[1] = genreId;
+    movieInfo[2] = title;
+    localStorage.setItem("movieInfo", JSON.stringify(movieInfo));
+}
+function addTitle(title){
+    const header = document.createElement("h1");
+    const headerContainer = document.createElement("div");
+    title = title.toUpperCase();
+    header.textContent = title;
+    headerContainer.setAttribute("class", "box text-center");
+    headerContainer.appendChild(header);
+    movieList.appendChild(headerContainer);
+}
+function getWatchProviders(id){
+    var requestUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=d731edca152ef707766b1bf7bf0763e9&with_region=US`;
+    fetch(requestUrl)
     .then(function (response) {
         return response.json();
         })
     .then(function (data) {
     console.log(data);
+    })
+    .catch(err => console.error(err));
+}
+function getMovieApi(genreId, page, genre){
+    movieList.textContent = "";
+    var requestUrl = `https://api.themoviedb.org/3/discover/movie?api_key=d731edca152ef707766b1bf7bf0763e9&with_original_language=en&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc&vote_count.gte=200`;
+    fetch(requestUrl)
+    .then(function (response) {
+        return response.json();
+        })
+    .then(function (data) {
+    console.log(data);
+    addTitle(genre);
+
+
     for(let i=0; i<data.results.length; i++){
         let movieBox = document.createElement("div");
         let title = document.createElement("h1");
         let movie = document.createElement("p");
         let poster = document.createElement("img");
-        let poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].poster_path;
+        let poster_path = "";
+        if(data.results[i].backdrop_path===null){
+            poster_path = "assets/images/movie.png";
+        }
+        else{
+            poster_path = "https://image.tmdb.org/t/p/original"+ data.results[i].backdrop_path;
+        }
        
-        title.textContent = data.results[i].original_title
-        movie.textContent = data.results[i].overview
-        poster.setAttribute("src", poster_path)
-        poster.setAttribute("class", "poster");
-        movieBox.setAttribute("class", "box")
-        movieBox.appendChild(title);
+        title.textContent = data.results[i].original_title;
+        movie.textContent = data.results[i].overview;
+        poster.setAttribute("src", poster_path);
+        poster.setAttribute("class", "media-left");
+        title.setAttribute("class", "media-content font-monaco");
+        movie.setAttribute("class", "media-content font-monaco-small");
+        movieBox.setAttribute("class", "box content");
         movieBox.appendChild(poster);
+        movieBox.appendChild(title);
         movieBox.appendChild(movie);
         movieList.appendChild(movieBox);
+        getWatchProviders(data.results[i].id);
 
-        
+         
     }
+    page = data.page
+    setMovieStorage(page, genreId, genre);
+    if(data.page===1){
+        let pagination = document.createElement("nav");
+        let next = document.createElement("a");
+        pagination.setAttribute("class", "pagination is-rounded");
+        next.setAttribute("class", "pagination-next");
+        next.textContent = "Next";
+        pagination.appendChild(next);
+        movieList.appendChild(pagination);
+        next.addEventListener("click", function(event){
+            page++;
+            event.preventDefault();
+            getMovieApi(genreId, page);
+            setMovieStorage(page,genreId,genre);
+
+        })
+    } else{
+        let pagination = document.createElement("nav");
+        let previous = document.createElement("a");
+        let next = document.createElement("a");
+        pagination.setAttribute("class", "pagination is-rounded");
+        previous.setAttribute("class", "pagination-previous");
+        next.setAttribute("class", "pagination-next");
+        previous.textContent = "Previous";
+        next.textContent = "Next";
+        pagination.appendChild(previous);
+        pagination.appendChild(next);
+        movieList.appendChild(pagination);
+        next.addEventListener("click", function(event){
+            page++;
+            event.preventDefault();
+            getMovieApi(genreId, page, genre);
+            setMovieStorage(page,genreId,genre);
+        })
+        previous.addEventListener("click", function(event){
+            page--;
+            event.preventDefault();
+            getMovieApi(genreId, page, genre);
+            setMovieStorage(page,genreId,genre);
+        })
+        .catch(err => console.error(err));
+    }
+    
+
 })
 }
+window.addEventListener("load", function () {
+    movieList.textContent = "";
+    let movieInfo = JSON.parse(localStorage.getItem("movieInfo"));
+    addTitle(movieInfo[2]);
+    getMovieApi(movieInfo[1],movieInfo[0], movieInfo[2]);
+    
+
+})
