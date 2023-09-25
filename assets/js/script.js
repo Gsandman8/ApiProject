@@ -233,13 +233,13 @@ function getMovieApi(genreId, page, genre){
         next.addEventListener("click", function(event){
             page++;
             event.preventDefault();
-            getMovieApi(genreId, page);
+            getMovieApi(genreId, page, genre);
             setMovieStorage(page,genreId,genre);
         })
         previous.addEventListener("click", function(event){
             page--;
             event.preventDefault();
-            getMovieApi(genreId, page);
+            getMovieApi(genreId, page, genre);
             setMovieStorage(page,genreId,genre);
         })
         .catch(err => console.error(err));

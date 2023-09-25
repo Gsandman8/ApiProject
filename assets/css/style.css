@@ -143,3 +143,11 @@ li{
 .pastel-orange{
     background-color: var(--pastel-orange);
 }
+
+.pagination-next{
+    background-color: white;
+}
+
+.pagination-previous{
+    background-color: white;
+}
