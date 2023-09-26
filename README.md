@@ -29,6 +29,7 @@ APIs:
 
 ## Credits
 Raymond Bautista, https://github.com/Raymond2811
+Josue Hernandez, https://github.com/JosueHernand
 
 ## Links
 Github Repo:
