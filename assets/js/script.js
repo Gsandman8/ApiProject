@@ -54,7 +54,15 @@ searchForm.addEventListener('submit', function(e){
     yelp.innerHTML = '';
 
     fetch(apiUrl, options)
-    .then(response => response.json())
+    .then(response => {
+        if (response.status === 403){
+            // location.href = response.url;
+            window.open(response.url, '_blank');
+            location.reload();
+        }
+        console.log(response);
+        return response.json()
+    })
     .then(function(data){
     console.log(data);
     yelp.innerHTML += `<div class="box">
@@ -93,7 +101,9 @@ searchForm.addEventListener('submit', function(e){
         }
         cityInput.value = '';
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error(err)
+    });
 })
 
 const genreBtn = document.querySelector("#genreBtn");
